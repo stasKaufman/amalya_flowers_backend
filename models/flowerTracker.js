@@ -18,6 +18,9 @@ const FlowerTracker = sequelize.define('FlowerTracker', {
   },
   appearance: {
     type: DataTypes.BOOLEAN
+  },
+  free_text: {
+    type: DataTypes.STRING
   }
 }, {
     tableName: 'flower_tracker',

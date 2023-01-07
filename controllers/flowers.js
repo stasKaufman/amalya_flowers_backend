@@ -63,15 +63,11 @@ async function searchFlowers (req, res, next) {
 }
 
 async function createUpdateFlowerTracker( req, res, next) {
-    const { flower_Id, date, appearance } = req.body;
+    const flowerTrackerData = req.body;
     let trackerItem, created
 
     try {
-        [trackerItem, created] = await FlowerTracker.upsert({
-            flower_Id,
-            date,
-            appearance
-        });
+        [trackerItem, created] = await FlowerTracker.upsert(flowerTrackerData);
     } catch (error) {
         return next(error)
     }

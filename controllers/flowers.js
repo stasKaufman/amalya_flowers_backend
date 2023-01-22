@@ -35,6 +35,7 @@ async function searchFlowers (req, res, next) {
     if (text) {
         const querySearchFilters = [
             { id: { [Op.like]: '%' + text + '%' } },
+            { old_id: { [Op.like]: '%' + text + '%' } },
             { name: { [Op.like]: '%' + text + '%' } },
             { variety_catalog_id: {[Op.like]: '%' + text + '%' } },
             { breeder: { [Op.like]: '%' + text + '%' } },

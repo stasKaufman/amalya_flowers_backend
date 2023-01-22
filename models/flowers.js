@@ -8,6 +8,9 @@ const Flower = sequelize.define('Flower', {
     autoIncrement: true,
     primaryKey: true
   },
+  old_id: {
+    type: DataTypes.STRING
+  },
   variety_catalog_id: {
     type: DataTypes.STRING,
     allowNull: false

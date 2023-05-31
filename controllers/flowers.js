@@ -2,6 +2,7 @@ const { Op } = require('sequelize');
 const Flower = require('../models/flowers');
 const FlowerTracker = require('../models/flowerTracker');
 const { to } = require('await-to-js');
+const _ = require('lodash');
 
 async function getFlowerById (req, res, next) {
     const flowerId = req.params.id;
@@ -27,9 +28,9 @@ async function getFlowerById (req, res, next) {
 }
 
 async function searchFlowers (req, res, next) {
-    const { text, limit, offset } = req.body
-    let totalCountFilters = {} , 
-    flowersFilters = { offset: Number(offset), limit: Number(limit) }
+    const { text, limit, offset, activityStatus } = req.body
+    let totalCountFilters = {}
+    const flowersFilters = { offset: Number(offset), limit: Number(limit) }
 
     // if search string not empty we set filters
     if (text) {
@@ -46,10 +47,18 @@ async function searchFlowers (req, res, next) {
         const where = {
                 [Op.or]: querySearchFilters
         }
+
+        // null meaning fetch all.
+        if (activityStatus !== null) {
+            where.is_active = activityStatus
+        }
         
         totalCountFilters.where = where;
         flowersFilters.where = where;
 
+    } else if (activityStatus !== null) {
+        totalCountFilters.where = {is_active: activityStatus};
+        flowersFilters.where = {is_active: activityStatus};;
     }
 
     let totalCountQuery = Flower.count(totalCountFilters)
@@ -76,8 +85,27 @@ async function createUpdateFlowerTracker( req, res, next) {
     res.status(201).json({trackerItem, created})
 }
 
+async function updateFlowerById(req, res, next) {
+    const flowerId = req.params.id;
+    const proprtiesToUpdate = _.pick(req.body, ['is_active', 'inactive_reasons']);
+
+    let flower, error
+
+    [error, flower] = await to(Flower.update(
+            proprtiesToUpdate,
+            { where: {id: flowerId} }
+    ))
+
+    if (error) {
+        return next(error)
+    }
+
+    res.status(204).send()
+}
+
 module.exports = {
     getFlowerById,
     searchFlowers,
-    createUpdateFlowerTracker
+    createUpdateFlowerTracker,
+    updateFlowerById
 }

@@ -29,6 +29,12 @@ const Flower = sequelize.define('Flower', {
   },
   url: {
     type: DataTypes.STRING
+  },
+  is_active: {
+    type: DataTypes.BOOLEAN
+  },
+  inactive_reasons: {
+    type: DataTypes.JSON
   }
 }, {
     tableName: 'flowers',

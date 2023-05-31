@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
-
+// amalya_flowers_production
+// amalya_flowers_development
 const sequelize = new Sequelize(
    process.env.DB_NAME || 'amalya_flowers_production', 
    process.env.DB_USER_NAME || 'stas', 

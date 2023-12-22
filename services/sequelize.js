@@ -4,8 +4,8 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(
    process.env.DB_NAME || 'amalya_flowers_production', 
    process.env.DB_USER_NAME || 'stas', 
-   process.env.DB_PASSWORD || 'jsad4ldsfmJJJ222d', {
-    host: process.env.DB_HOST || 'awseb-e-mxdmp3rtbx-stack-awsebrdsdatabase-s0nascw4t7lr.cdpdls0qffvp.us-east-1.rds.amazonaws.com',
+   process.env.DB_PASSWORD || 'kep6MRY4byd6qnz.kzu', {
+    host: process.env.DB_HOST || 'amalya-flowers.cdpdls0qffvp.us-east-1.rds.amazonaws.com',
     dialect:'mysql'
   });
 
